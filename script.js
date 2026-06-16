@@ -2,10 +2,11 @@ const Player = (name, marker) => {
     let score = 0;
 
     const getScore = () => score;
+    const resetScore = () => score = 0;
     const addScore = () => { score++; };
     const setName = (newName) => { name = newName; };
 
-    return { get name() { return name; }, setName, marker, getScore, addScore }
+    return { get name() { return name; }, setName, marker, getScore, addScore, resetScore }
 }
 
 const leaderboard = {
@@ -124,7 +125,7 @@ const gameController = ((gameBoard, player1, player2) => {
         displayController();
         modal.classList.remove("show");
         updateHovers();
-        updateLeaderBoard()
+        updateLeaderBoard();
     }
 
     const updateHovers = () => {
@@ -195,6 +196,9 @@ document.querySelector(".leaderboard").addEventListener("beforeinput", (event) =
         event.preventDefault(); 
         if (document.activeElement) {
             document.activeElement.blur();
+            player1.resetScore();
+            player2.resetScore();
+            gameController.resetGame();
         }
     }
 });
@@ -207,6 +211,9 @@ document.addEventListener("keydown", (event) => {
         if (active === leaderboard.p1User || active === leaderboard.p2User) {
             event.preventDefault();
             active.blur();
+            player1.resetScore();
+            player2.resetScore();
+            gameController.resetGame();
         }
     }
 });

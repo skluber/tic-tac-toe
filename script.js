@@ -19,13 +19,15 @@ const gameBoard = (() => {
 
     const getBoard = () => [...board];
 
+    const resetBoard = () => board.fill("");
     const isSquareAvailable = (index) => board[index] === "";
 
-    return { setMarker, getBoard, isSquareAvailable }
+    return { setMarker, getBoard, resetBoard, isSquareAvailable }
 })();
 
 const gameController = ((gameBoard, player1, player2) => {
     let firstPlayerTurn = true;
+    let isGameOver = false;
 
     function displayController () {
         let board = gameBoard.getBoard();
@@ -50,7 +52,7 @@ const gameController = ((gameBoard, player1, player2) => {
     }
 
     const playRound = (index) => {
-        if(!gameBoard.isSquareAvailable(index)) return;
+        if(!gameBoard.isSquareAvailable(index) || isGameOver) return;
 
         const marker = firstPlayerTurn ? "X" : "O";
         gameBoard.setMarker(index, marker);
@@ -58,14 +60,26 @@ const gameController = ((gameBoard, player1, player2) => {
         if (checkWinner()) {
             const activePlayer = firstPlayerTurn ? player1 : player2;
             activePlayer.addScore();
+            isGameOver = true;
 
             console.log(`Ganador ${activePlayer.name}: | Score: ${activePlayer.getScore()} | Marker: ${activePlayer.marker}`)
+        } else if (gameBoard.getBoard().every(cell => cell !== "")) {
+            console.log("¡Empate!");
+            isGameOver = true;
         } else {
             firstPlayerTurn = !firstPlayerTurn;
         }
     }
 
-    return { playRound, displayController }
+    const getGameStatus = () => isGameOver;
+
+    const resetGame = () => {
+        firstPlayerTurn = true;
+        isGameOver = false;
+        gameBoard.resetBoard();
+    }
+
+    return { playRound, displayController, getGameStatus, resetGame }
 })(gameBoard, player1, player2);
 
 const cells = document.querySelectorAll(".cell");

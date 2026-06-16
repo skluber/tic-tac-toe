@@ -1,13 +1,14 @@
 const Player = (name, marker) => {
     let score = 0;
     const getScore = () => score;
-    const addScore = () => score++;
+    const addScore = () => { score++; };
 
     return { name, marker, getScore, addScore }
 }
 
 const player1 = Player("Antonio", "X");
 const player2 = Player("Ana", "O");
+
 
 const gameBoard = (() => {
     const board = ["", "", "", "", "", "", "", "", ""];
@@ -55,8 +56,10 @@ const gameController = ((gameBoard, player1, player2) => {
         gameBoard.setMarker(index, marker);
 
         if (checkWinner()) {
-            let user = firstPlayerTurn ? player1.name : player2.name
-            console.log(`Ganador ${user}: ${marker}`)
+            const activePlayer = firstPlayerTurn ? player1 : player2;
+            activePlayer.addScore();
+
+            console.log(`Ganador ${activePlayer.name}: | Score: ${activePlayer.getScore()} | Marker: ${activePlayer.marker}`)
         } else {
             firstPlayerTurn = !firstPlayerTurn;
         }
@@ -64,3 +67,12 @@ const gameController = ((gameBoard, player1, player2) => {
 
     return { playRound, displayController }
 })(gameBoard, player1, player2);
+
+const cells = document.querySelectorAll(".cell");
+
+cells.forEach((cell, index) => {
+    cell.addEventListener("click", () => {
+        gameController.playRound(index);
+        gameController.displayController();
+    })
+})

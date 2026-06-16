@@ -7,8 +7,15 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
+    gap: 20px;
     min-height: 100vh; 
     background-color: grey; 
+}
+
+.container {
+    display: grid;
+    grid-template-rows: 1fr 4fr;
 }
 
 .board {
@@ -27,5 +34,109 @@ body {
 }
 
 .cell {
+    background-color: whitesmoke;
+    text-align: center;
+    align-content: center;
+    font-size: clamp(40px, 20vw, 140px);
+}
+
+.cell[data-hover]:empty:hover::after {
+    content: attr(data-hover); 
+    color: rgba(0, 0, 0, 0.2); 
+}
+
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.75); 
+    z-index: 10; 
+    
+    justify-content: center;
+    align-items: center;
+}
+
+.modal.show {
+    display: flex;
+}
+
+.modal-content {
+    background-color: white;
+    padding: 30px 50px;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    font-family: sans-serif;
+}
+
+.modal-content h3 {
+    margin-top: 0;
+    font-size: 1rem;
+    color: #333;
+}
+
+.modal-content h2 {
+    margin-top: 0;
+    font-size: 2rem;
+    color: #333;
+}
+
+#restart-btn {
+    padding: 10px 25px;
+    font-size: 1.2rem;
+    font-weight: bold;
     background-color: aqua;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: transform 0.1s ease;
+}
+
+#restart-btn:hover {
+    transform: scale(1.05);
+}
+
+.leaderboard {
+    width: 100%;
+    max-width: 620px; /* Mismo ancho que tu tablero para que queden alineados */
+    margin: 0 auto 20px auto; /* Centrada y con separación respecto al tablero */
+    border-collapse: separate;
+    border-spacing: 0;
+    background-color: whitesmoke;
+    font-family: sans-serif;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.leaderboard th, 
+.leaderboard td {
+    padding: 12px 20px;
+    text-align: center;
+}
+
+.leaderboard th {
+    background-color: #333;
+    color: white;
+    font-size: 0.95rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.leaderboard tr:not(:last-child) td {
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.leaderboard td {
+    font-size: 1.2rem;
+    color: #333;
+}
+
+/* Estilo destacado para los números de las puntuaciones */
+#score-p1, #score-p2 {
+    font-weight: bold;
+    color: #111;
 }

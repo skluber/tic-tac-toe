@@ -8,16 +8,49 @@
     <script src="script.js" defer></script>
 </head>
 <body>
-    <div class="board">
-        <div class="cell" data-cell></div>
-        <div class="cell" data-cell></div>
-        <div class="cell" data-cell></div>
-        <div class="cell" data-cell></div>
-        <div class="cell" data-cell></div>
-        <div class="cell" data-cell></div>
-        <div class="cell" data-cell></div>
-        <div class="cell" data-cell></div>
-        <div class="cell" data-cell></div>
+
+    <div class="container">
+        <table class="leaderboard">
+            <thead>
+                <tr>
+                    <th>Player</th>
+                    <th>Marker</th>
+                    <th>Score</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td id="p1-user">Antonio</td>
+                    <td id="p1-marker">X</td>
+                    <td id="p1-score">0</td>
+                </tr>
+                <tr>
+                    <td id="p2-user">Ana</td>
+                    <td id="p2-marker">O</td>
+                    <td id="p2-score">0</td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <div class="board">
+            <div class="cell" data-cell data-hover="❌"></div>
+            <div class="cell" data-cell data-hover="❌"></div>
+            <div class="cell" data-cell data-hover="❌"></div>
+            <div class="cell" data-cell data-hover="❌"></div>
+            <div class="cell" data-cell data-hover="❌"></div>
+            <div class="cell" data-cell data-hover="❌"></div>
+            <div class="cell" data-cell data-hover="❌"></div>
+            <div class="cell" data-cell data-hover="❌"></div>
+            <div class="cell" data-cell data-hover="❌"></div>
+        </div>
+    </div>
+
+    <div class="modal" id="game-modal">
+        <div class="modal-content">
+            <h2 id="modal-message">Winner: Antonio</h2>
+            <h3 id="modal-score">Score: 0</h3>
+            <button id="restart-btn">Play Again</button>
+        </div>
     </div>
 </body>
 </html>

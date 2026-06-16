@@ -1,13 +1,12 @@
 const Player = (name, marker) => {
     let score = 0;
+
     const getScore = () => score;
     const addScore = () => { score++; };
+    const setName = (newName) => { name = newName; };
 
-    return { name, marker, getScore, addScore }
+    return { get name() { return name; }, setName, marker, getScore, addScore }
 }
-
-const player1 = Player("Antonio", "❌");
-const player2 = Player("Ana", "⭕");
 
 const leaderboard = {
     p1User: document.getElementById("p1-user"),
@@ -18,6 +17,9 @@ const leaderboard = {
     p2Marker: document.getElementById("p2-marker"),
     p2Score: document.getElementById("p2-score")
 };
+
+const player1 = Player(leaderboard.p1User.textContent, leaderboard.p1Marker.textContent);
+const player2 = Player(leaderboard.p2User.textContent, leaderboard.p2Marker.textContent);
 
 const cells = document.querySelectorAll(".cell");
 const modal = document.getElementById("game-modal");
@@ -162,4 +164,49 @@ cells.forEach((cell, index) => {
 
 restartButton.addEventListener("click", () => {
     gameController.resetGame();
+});
+
+leaderboard.p1User.addEventListener("blur", () => {
+    const newName = leaderboard.p1User.textContent.trim();
+
+    if (newName === player2.name) {
+        alert("Duplicated name");
+    } else {
+        player1.setName(newName === "" ? "Player 1" : newName)
+    }
+
+    leaderboard.p1User.textContent = player1.name;
+})
+
+leaderboard.p2User.addEventListener("blur", () => {
+    const newName = leaderboard.p2User.textContent.trim();
+
+    if (newName === player1.name) {
+        alert("Duplicated name");
+    } else {
+        player2.setName(newName === "" ? "Player 2" : newName)
+    }
+
+    leaderboard.p2User.textContent = player2.name;
+})
+
+document.querySelector(".leaderboard").addEventListener("beforeinput", (event) => {
+    if (event.inputType === "insertParagraph" || event.inputType === "insertLineBreak") {
+        event.preventDefault(); 
+        if (document.activeElement) {
+            document.activeElement.blur();
+        }
+    }
+});
+
+document.addEventListener("keydown", (event) => {
+    if (event.metaKey || event.ctrlKey) return;
+    if (event.key === "Escape") {
+        const active = document.activeElement;
+        
+        if (active === leaderboard.p1User || active === leaderboard.p2User) {
+            event.preventDefault();
+            active.blur();
+        }
+    }
 });

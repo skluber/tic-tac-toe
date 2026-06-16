@@ -101,8 +101,8 @@ body {
 
 .leaderboard {
     width: 100%;
-    max-width: 620px; /* Mismo ancho que tu tablero para que queden alineados */
-    margin: 0 auto 20px auto; /* Centrada y con separación respecto al tablero */
+    max-width: 620px; 
+    margin: 0 auto 20px auto; 
     border-collapse: separate;
     border-spacing: 0;
     background-color: whitesmoke;
@@ -135,8 +135,17 @@ body {
     color: #333;
 }
 
-/* Estilo destacado para los números de las puntuaciones */
 #score-p1, #score-p2 {
     font-weight: bold;
     color: #111;
+}
+
+.leaderboard td[contenteditable="true"] {
+    cursor: text;
+}
+
+.leaderboard td[contenteditable="true"]:focus {
+    box-shadow: inset 0 0 0 2px #333;
+    background-color: #fff;    
+    outline: none;
 }
